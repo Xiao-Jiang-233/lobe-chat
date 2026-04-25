@@ -36,12 +36,11 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 24.11.1
-          cache: 'pnpm'
 
       - name: 4. Generate lockfile (if missing)
         run: |
           if [ ! -f pnpm-lock.yaml ]; then
-            echo "⚠️ pnpm-lock.yaml not found, generating..."
+            echo "⚠️  pnpm-lock.yaml not found, generating..."
             pnpm install --no-frozen-lockfile
           fi
 
