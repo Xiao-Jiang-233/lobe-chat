@@ -37,26 +37,19 @@ jobs:
         with:
           node-version: 24.11.1
 
-      - name: 4. Generate lockfile (if missing)
-        run: |
-          if [ ! -f pnpm-lock.yaml ]; then
-            echo "⚠️  pnpm-lock.yaml not found, generating..."
-            pnpm install --no-frozen-lockfile
-          fi
+      - name: 4. Install dependencies
+        run: pnpm install
 
-      - name: 5. Install dependencies
-        run: pnpm install --frozen-lockfile
-
-      - name: 6. Setup Bun
+      - name: 5. Setup Bun
         uses: oven-sh/setup-bun@v2
         with:
           bun-version: latest
 
-      - name: 7. Pull Vercel Environment
+      - name: 6. Pull Vercel Environment
         run: npx vercel@latest pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
 
-      - name: 8. Build Project Artifacts
+      - name: 7. Build Project Artifacts
         run: npx vercel@latest build --prod --token=${{ secrets.VERCEL_TOKEN }}
 
-      - name: 9. Deploy to Vercel
+      - name: 8. Deploy to Vercel
         run: npx vercel@latest deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }}
