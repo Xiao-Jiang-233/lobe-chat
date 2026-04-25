@@ -28,14 +28,14 @@ jobs:
         with:
           ref: ${{ github.event_name == 'workflow_run' && 'canary' || '' }}
 
-      - name: 2. Setup Node.js
+      - name: 2. Setup PNPM
+        uses: pnpm/action-setup@v4
+
+      - name: 3. Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 24.11.1
+          node-version: 24.15.0
           cache: 'pnpm'
-
-      - name: 3. Setup PNPM
-        uses: pnpm/action-setup@v4
 
       - name: 4. Setup Bun
         uses: oven-sh/setup-bun@v2
