@@ -1,17 +1,19 @@
 name: Deploy to Vercel (Prebuilt)
-
 on:
   push:
     branches:
       - canary
   workflow_dispatch:
-
+  workflow_run:
+    workflows: ["Upstream Sync"]
+    types:
+      - completed
 env:
   VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
   VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
-
 jobs:
   Deploy-to-Vercel:
+    if: ${{ github.event.workflow_run.conclusion == 'success' || github.event_name != 'workflow_run' }}
     runs-on: ubuntu-latest
     steps:
       - name: 1. Checkout Code
